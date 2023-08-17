@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.2/echarts.min.js"></script>
+</head>
+
+<body>
+    <div id="main" style="width:600px;height:400px;"></div>
+
+    <script>
+        const data = {
+            name: '路由交换',
+            children: [
+                {
+                    name: '路由器',
+                    children: [
+                        {
+                            name: '路由',
+                            children: [
+                                {
+                                    name: '路由表',
+                                    children: [
+                                        {
+                                            name: '直接连接路由'
+                                        },
+                                        {
+                                            name: '静态路由'
+                                        },
+                                        {
+                                            name: '动态路由',
+                                            children: [
+                                                {
+                                                    name: 'RIP',
+                                                    children: [
+                                                        {
+                                                            name: 'RIP v1'
+                                                        },
+                                                        {
+                                                            name: 'RIP v2'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'OSPF',
+                                                    children: [
+                                                        {
+                                                            name: 'OSPF类型'
+                                                        },
+                                                        {
+                                                            name: 'OSPF邻居'
+                                                        },
+                                                        {
+                                                            name: 'OSPF区域'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'BGP',
+                                                    children: [
+                                                        {
+                                                            name: 'eBGP'
+                                                        },
+                                                        {
+                                                            name: 'iBGP'
+                                                        }
+                                                    ]
+                                                },
+                                                {
+                                                    name: 'EIGRP',
+                                                    children: [
+                                                        {
+                                                            name: 'EIGRP路由计算'
+                                                        },
+                                                        {
+                                                            name: 'EIGRP路由优先级'
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    name: '交换机',
+                    children: [
+                        {
+                            name: '交换机基础',
+                            children: [
+                                {
+                                    name: '交换机端口',
+                                    children: [
+                                        {
+                                            name: '接入端口'
+                                        },
+                                        {
+                                            name: '汇聚端口'
+                                        },
+                                        {
+                                            name: '路由端口'
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: '交换机表',
+                                    children: [
+                                        {
+                                            name: 'MAC地址表'
+                                        },
+                                        {
+                                            name: 'CAM表'
+                                        },
+                                        {
+                                            name: 'ARP表'
+                                        }
+                                    ]
+                                },
+                                {
+                                    name: 'MAC地址学习'
+                                }
+                            ]
+                        },
+                        {
+                            name: 'VLAN',
+                            children: [
+                                {
+                                    name: 'VLAN配置'
+                                },
+                                {
+                                    name: 'VLAN标记'
+                                },
+                                {
+                                    name: 'VLAN划分'
+                                }
+                            ]
+                        },
+                        {
+                            name: 'STP',
+                            children: [
+                                {
+                                    name: 'STP基础'
+                                },
+                                {
+                                    name: 'RSTP'
+                                },
+                                {
+                                    name: 'MSTP'
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        };
+
+        const option = {
+            series: {
+                type: 'tree',
+                data: [data],
+                top: '5%',
+                left: '7%',
+                bottom: '2%',
+                right: '20%',
+                symbolSize: 7,
+                label: {
+                    fontSize: 12
+                }
+            }
+        };
+
+        const chart = echarts.init(document.getElementById('main'));
+        chart.setOption(option);
+    </script>
+</body>
+</html>
