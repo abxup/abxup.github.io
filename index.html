@@ -4,11 +4,99 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ABXUP Start</title>
+    <!-- 引入GitHub Markdown的CSS样式 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css">
+    <!-- 引入clipboard.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.8/clipboard.min.js"></script>
+    <!-- 你的自定义样式 -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- showdown.js 用于Markdown到HTML的转换 -->
     <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
     <script src="js/abxup.js"></script>
+    <style>
+      /* 自定义复制按钮样式 */
+      .copy-button {
+          float: right;
+          padding: 5px 10px;
+          margin: 5px;
+          border: none;
+          border-radius: 4px;
+          background-color: #0366d6;
+          color: white;
+          cursor: pointer;
+          font-size: 12px;
+      }
+
+      /* 为pre标签添加GitHub风格的样式 */
+      pre {
+          position: relative;
+      }
+    </style>
 </head>
 <body>
-    <div id="content"></div>
+    <div id="content" class="markdown-body"></div>
+
+    <script>
+      // 当文档加载完毕后执行
+      document.addEventListener('DOMContentLoaded', function () {
+        // 假设你的Markdown内容在一个变量中，例如`markdownContent`
+        // 你需要从服务器或其他地方获取实际的Markdown内容
+        var markdownContent = '# Example\n\nSome `code` here.\n\n```javascript\nconsole.log("Hello, world!");\n```';
+        
+        // 使用showdown转换Markdown到HTML
+        var converter = new showdown.Converter(),
+            html = converter.makeHtml(markdownContent);
+        document.getElementById('content').innerHTML = html;
+
+        // 查询所有的代码块并为它们添加复制按钮
+        var codeBlocks = document.querySelectorAll('pre code');
+        codeBlocks.forEach(function (codeBlock) {
+          var button = document.createElement('button');
+          button.className = 'copy-button';
+          button.textContent = '复制';
+          button.onclick = function () {
+            navigator.clipboard.writeText(codeBlock.textContent).then(function() {
+              /* 复制成功后的操作 */
+              button.textContent = '已复制';
+              setTimeout(function () {
+                  button.textContent = '复制';
+              }, 2000);
+            }, function(err) {
+              /* 复制失败后的操作 */
+              button.textContent = '复制失败';
+            });
+          };
+          var pre = codeBlock.parentNode;
+          if (pre.parentNode.classList.contains('highlight')) {
+              var highlight = pre.parentNode;
+              highlight.parentNode.insertBefore(button, highlight);
+          } else {
+              pre.parentNode.insertBefore(button, pre);
+          }
+        });
+
+        // 使用clipboard.js来处理复制逻辑
+        var clipboard = new ClipboardJS('.copy-button', {
+          target: function(trigger) {
+            return trigger.nextElementSibling;
+          }
+        });
+
+        clipboard.on('success', function(e) {
+          e.trigger.textContent = '已复制';
+          e.clearSelection();
+          setTimeout(function() {
+            e.trigger.textContent = '复制';
+          }, 2000);
+        });
+
+        clipboard.on('error', function(e) {
+          e.trigger.textContent = '复制失败';
+          setTimeout(function() {
+            e.trigger.textContent = '复制';
+          }, 2000);
+        });
+      });
+    </script>
 </body>
 </html>
