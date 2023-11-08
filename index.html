@@ -3,17 +3,19 @@
 <head>
     <title>Markdown Viewer</title>
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-</head>
-<body>
-    <div id="content"></div>
     <script>
-        var params = new URLSearchParams(window.location.search);
-        var file = '/post/' + params.get('p') + '.md';
-        fetch(file)
-            .then(response => response.text())
-            .then(text => {
-                document.getElementById('content').innerHTML = marked(text);
-            });
+        function loadMarkdown() {
+            var params = new URLSearchParams(window.location.search);
+            var file = '/post/' + params.get('p') + '.md';
+            fetch(file)
+                .then(response => response.text())
+                .then(text => {
+                    document.getElementById('content').innerHTML = marked(text);
+                });
+        }
     </script>
+</head>
+<body onload="loadMarkdown()">
+    <div id="content"></div>
 </body>
 </html>
