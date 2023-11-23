@@ -1,0 +1,12 @@
+body {
+    background-color: #fff;
+    color: #000;
+    font-family: Arial, sans-serif;
+}
+.video-container {
+    width: 45vw;
+    height: calc(45vw * 6 / 9);
+    margin: 0 auto;
+    border-radius: 10px;
+    overflow: hidden;
+}
