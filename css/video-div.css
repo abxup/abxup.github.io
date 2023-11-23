@@ -10,3 +10,11 @@ body {
     border-radius: 10px;
     overflow: hidden;
 }
+
+/* 针对小屏幕设备的样式 */
+@media (max-width: 600px) {
+    .video-container {
+        width: 90vw;
+        height: calc(90vw * 6 / 9);
+    }
+}
